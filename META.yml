@@ -10,4 +10,4 @@ meta-spec:
 name: PostgreSQL-PLPerl-Call
 requires:
   ExtUtils::MakeMaker: 6.11
-version: 1.002
+version: 1.003
