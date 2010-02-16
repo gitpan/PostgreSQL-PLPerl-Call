@@ -1,0 +1,11 @@
+LICENSE
+MANIFEST
+META.yml
+Makefile.PL
+README
+dist.ini
+lib/PostgreSQL/PLPerl/Call.pm
+t/release-pod-coverage.t
+t/release-pod-syntax.t
+t/test10-call.sql
+t/test10-call.t
