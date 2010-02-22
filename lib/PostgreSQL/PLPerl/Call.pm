@@ -1,5 +1,5 @@
 package PostgreSQL::PLPerl::Call;
-our $VERSION = '1.004';
+our $VERSION = '1.005';
 
 =head1 NAME
 
@@ -7,7 +7,7 @@ PostgreSQL::PLPerl::Call - Simple interface for calling SQL functions from Postg
 
 =head1 VERSION
 
-version 1.004
+version 1.005
 
 =head1 SYNOPSIS
 
@@ -238,7 +238,7 @@ our $debug = 0;
 # encapsulated package to provide an AUTOLOAD interface to call()
 use constant SP => do { 
     package PostgreSQL::PLPerl::Call::SP;
-our $VERSION = '1.004';
+our $VERSION = '1.005';
 
     sub AUTOLOAD {
         #(my $function = our $AUTOLOAD) =~ s/.*:://;

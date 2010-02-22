@@ -6,15 +6,16 @@
       "version" : 1.4,
       "url" : "http://module-build.sourceforge.net/META-spec-v1.4.html"
    },
-   "generated_by" : "Dist::Zilla version 1.100160",
-   "version" : "1.004",
+   "generated_by" : "Dist::Zilla version 1.100520",
+   "version" : "1.005",
    "name" : "PostgreSQL-PLPerl-Call",
    "author" : [
       "Tim Bunce <Tim.Bunce@pobox.com>"
    ],
    "license" : "perl",
    "requires" : {
-      "ExtUtils::MakeMaker" : "6.11"
+      "ExtUtils::MakeMaker" : "6.11",
+      "DBI" : "1.605"
    },
    "abstract" : "Simple interface for calling SQL functions from PostgreSQL PL/Perl"
 }

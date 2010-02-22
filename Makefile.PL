@@ -17,10 +17,11 @@ my %WriteMakefileArgs = (
                        'AUTHOR' => 'Tim Bunce <Tim.Bunce@pobox.com>',
                        'ABSTRACT' => 'Simple interface for calling SQL functions from PostgreSQL PL/Perl',
                        'EXE_FILES' => [],
-                       'VERSION' => '1.004',
+                       'VERSION' => '1.005',
                        'LICENSE' => 'perl',
                        'PREREQ_PM' => {
-                                        'ExtUtils::MakeMaker' => '6.11'
+                                        'ExtUtils::MakeMaker' => '6.11',
+                                        'DBI' => '1.605'
                                       }
                      );
 

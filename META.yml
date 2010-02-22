@@ -2,14 +2,15 @@
 abstract: 'Simple interface for calling SQL functions from PostgreSQL PL/Perl'
 author:
   - 'Tim Bunce <Tim.Bunce@pobox.com>'
-generated_by: 'Dist::Zilla version 1.100160'
+generated_by: 'Dist::Zilla version 1.100520'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
   version: 1.4
 name: PostgreSQL-PLPerl-Call
 requires:
+  DBI: 1.605
   ExtUtils::MakeMaker: 6.11
 resources:
   repository: git@github.com:timbunce/posgtresql-plperl-call.git
-version: 1.004
+version: 1.005
