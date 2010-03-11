@@ -14,15 +14,18 @@ my %WriteMakefileArgs = (
                                  },
                        'NAME' => 'PostgreSQL::PLPerl::Call',
                        'DISTNAME' => 'PostgreSQL-PLPerl-Call',
+                       'CONFIGURE_REQUIRES' => {
+                                                 'ExtUtils::MakeMaker' => '6.11'
+                                               },
                        'AUTHOR' => 'Tim Bunce <Tim.Bunce@pobox.com>',
+                       'BUILD_REQUIRES' => {},
                        'ABSTRACT' => 'Simple interface for calling SQL functions from PostgreSQL PL/Perl',
                        'EXE_FILES' => [],
-                       'VERSION' => '1.005',
-                       'LICENSE' => 'perl',
+                       'VERSION' => '1.006',
                        'PREREQ_PM' => {
-                                        'ExtUtils::MakeMaker' => '6.11',
                                         'DBI' => '1.605'
-                                      }
+                                      },
+                       'LICENSE' => 'perl'
                      );
 
 

@@ -1,7 +1,7 @@
 
 
 This archive contains the distribution PostgreSQL-PLPerl-Call, version
-1.005:
+1.006:
 
   Simple interface for calling SQL functions from PostgreSQL PL/Perl
 

@@ -1,5 +1,5 @@
 package PostgreSQL::PLPerl::Call;
-our $VERSION = '1.005';
+our $VERSION = '1.006';
 
 =head1 NAME
 
@@ -7,7 +7,7 @@ PostgreSQL::PLPerl::Call - Simple interface for calling SQL functions from Postg
 
 =head1 VERSION
 
-version 1.005
+version 1.006
 
 =head1 SYNOPSIS
 
@@ -41,10 +41,10 @@ Returning multi-row multi-column values:
 
 Alternative method-call syntax:
 
-    $pi   = SP->pi();
-    $seqn = SP->nextval($sequence_name);
+    $pi   = PG->pi();
+    $seqn = PG->nextval($sequence_name);
 
-Here C<SP> means Stored Procedure. (C<SP> is actually an imported constant whose
+Here C<PG> simply means PostgreSQL. (C<PG> is actually an imported constant whose
 value is the name of a package containing an AUTOLOAD function that dispatches
 to C<call()>. In case you wanted to know.)
 
@@ -117,19 +117,19 @@ argument. Otherwise you'll get a "function ... does not exist" error.
 
 An alternative syntax can be used for making calls:
 
-    SP->function_name(@args)
+    PG->function_name(@args)
 
 For example:
 
-    $pi   = SP->pi();
-    $seqn = SP->nextval($sequence_name);
+    $pi   = PG->pi();
+    $seqn = PG->nextval($sequence_name);
 
 Using this form you can't easily specify a schema name or argument types, and
 you can't call variadic functions. (For various technical reasons.)
 In cases where a signature is needed, like variadic or polymorphic functions,
 you might get a somewhat confusing error message. For example:
 
-    SP->generate_series(10,20);
+    PG->generate_series(10,20);
 
 fails with the error "there is no parameter $1". The underlying problem is that
 C<generate_series> is a polymorphic function: different versions of the
@@ -140,7 +140,7 @@ function are executed depending on the type of the arguments.
 It's simple to wrap a call into an anonymous subroutine and pass that code
 reference around. For example:
 
-    $nextval_fn = sub { SP->nextval(@_) };
+    $nextval_fn = sub { PG->nextval(@_) };
     ...
     $val = $nextval_fn->($sequence_name);
 
@@ -187,6 +187,41 @@ If you only want the first result you can use list context;
     ($bar) =  call('generate_series(int,int)', 10, 11);
      $bar  = (call('generate_series(int,int)', 10, 11))[0];
 
+=head1 ENABLING
+
+In order to use this module you need to arrange for it to be loaded when
+PostgreSQL initializes a Perl interpreter.
+
+Create a F<plperlinit.pl> file in the same directory as your
+F<postgres.conf> file, if it doesn't exist already.
+
+In the F<plperlinit.pl> file write the code to load this module.
+
+=head2 PostgreSQL 8.x
+
+Set the C<PERL5OPT> before starting postgres, to something like this:
+
+    PERL5OPT='-e "require q{plperlinit.pl}"'
+
+The code in the F<plperlinit.pl> should also include C<delete $ENV{PERL5OPT};>
+to avoid any problems with nested invocations of perl, e.g., via a C<plperlu>
+function.
+
+=head2 PostgreSQL 9.0
+
+For PostgreSQL 9.0 you can still use the C<PERL5OPT> method described above.
+Alternatively, and preferably, you can use the C<plperl.on_init> configuration
+variable in the F<postgres.conf> file.
+
+    plperl.on_init='require q{plperlinit.pl};'
+
+=head plperl
+
+You can use the L<PostgreSQL::PLPerl::Injector> module to make the
+call() function available for use in the C<plperlu> language:
+
+   use PostgreSQL::PLPerl::Injector;
+   inject_plperl_with_names_from(PostgreSQL::PLPerl::Call => 'call'); 
 
 =head1 OTHER INFORMATION
 
@@ -230,15 +265,15 @@ use Exporter;
 use Carp;
 
 our @ISA = qw(Exporter);
-our @EXPORT = qw(call SP);
+our @EXPORT = qw(call PG);
 
 my %sig_cache;
 our $debug = 0;
 
 # encapsulated package to provide an AUTOLOAD interface to call()
-use constant SP => do { 
-    package PostgreSQL::PLPerl::Call::SP;
-our $VERSION = '1.005';
+use constant PG => do { 
+    package PostgreSQL::PLPerl::Call::PG;
+our $VERSION = '1.006';
 
     sub AUTOLOAD {
         #(my $function = our $AUTOLOAD) =~ s/.*:://;
